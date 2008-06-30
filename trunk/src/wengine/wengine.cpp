@@ -4,12 +4,10 @@ wengine::wengine(int w, int h) :
     width_ (w),
     height_ (h),
     units_ (new unit_list),
-//    terrain_ (new surface_list),
     to_refresh_ (new num_list),
     occupied_ (new num_list)
 {
     for (int i=0; i<w*h; ++i) {
-//        terrain_->push_back(IMG_Load("../images/terrain/dirt.png"));
         to_refresh_->push_back(i);
     }
 
@@ -19,18 +17,13 @@ wengine::~wengine()
 {
     delete(occupied_);
     delete(to_refresh_);
- /*   for (unsigned int i=0; i<terrain_->size(); ++i) {
-        SDL_FreeSurface(terrain_->at(i));
-    }
- */
-	delete(terrain_);
+    delete(terrain_);
     for (unsigned int i=0; i<units_->size(); ++i) {
         delete(units_->at(i)->first);
         SDL_FreeSurface(units_->at(i)->second);
         delete(units_->at(i));
     }
     delete(units_);
-
 }
 
 void wengine::init(Uint32 init_flags, Uint32 mode_flags)
@@ -74,16 +67,10 @@ void wengine::repaint() const
     SDL_Rect rect;
     unit* u;
 
-    /* limpiar */
-    /*
-    SDL_FillRect(main_screen_, NULL,
-            SDL_MapRGB(main_screen_->format, 0, 0, 0));
-            */
-
-    /* terreno */
+    /* terrain */
     repaint_terrain();
 
-    /* unidades */
+    /* units */
     for (unit_list::iterator i = units_->begin(); i != units_->end(); ++i) {
         u = (*i)->first;
         if (u->x < 0 || u->y < 0) { continue; }
@@ -92,7 +79,7 @@ void wengine::repaint() const
         SDL_BlitSurface((*i)->second, NULL, main_screen_, &rect);
     }
 
-    /* actualizar pantalla */
+    /* update screen */
     SDL_UpdateRect(main_screen_, 0, 0, 0, 0);
 }
 
@@ -194,11 +181,13 @@ int wengine::get_tile_index(int x, int y)
     return x + y*width_;
 }
 
-int wengine::init_map(ifstream *archivo)
+int wengine::init_map(ifstream *map_file)
 {
-	terrain_=new gamemap(width_,height_, archivo);
-	for(int n=0;n<width_*height_;n++){
-		if(terrain_->es_muro(n))occupied_->push_back(n);
-	}
-	return 0;
+    terrain_=new gamemap(width_,height_, map_file);
+    for(int n=0;n<width_*height_;n++){
+        if (terrain_->es_muro(n)) {
+            occupied_->push_back(n);
+        }
+    }
+    return 0;
 }
