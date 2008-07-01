@@ -22,5 +22,11 @@ unit.o: wengine/unit.cpp
 gamemap.o: wengine/gamemap.cpp
 	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
 
+util.o: wengine/util.cpp
+	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
+
+config.o: wengine/config.cpp
+	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
+
 clean:
 	rm -rf *.o wengine/*.o $(EXE)
