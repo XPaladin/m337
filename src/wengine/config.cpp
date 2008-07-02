@@ -1,24 +1,24 @@
 #include "config.h"
 
+using namespace std;
+
 config::config() :
-    children_ (new child_map),
-    values_ (new string_map)
+    children_ (),
+    values_ ()
 {
 }
 
 config::~config()
 {
     clear();
-    delete(values_);
-    delete(children_);
 }
 
 void config::clear()
 {
     child_list* cl;
 
-    for (child_map::iterator i = children_->begin();
-            i != children_->end(); ++i) {
+    for (child_map::iterator i = children_.begin();
+            i != children_.end(); ++i) {
         cl = i->second;
         for (child_list::iterator j = cl->begin();
                 j != cl->end(); ++j) {
@@ -27,12 +27,26 @@ void config::clear()
         delete(cl);
     }
 
-    values_->clear();
-    children_->clear();
+    values_.clear();
+    children_.clear();
 }
 
-config::child_list* config::operator[](const string& str) const
+string config::operator[](const string& str) const
 {
-    return (*children_)[str];
+    values_[0] = 4;
+    return str;
+}
+
+config& config::add_child(const string& key)
+{
+    child_list* v;
+
+    if (children_.count(key) == 0) {
+        children_[key] = new child_list;
+    }
+
+    v = children_[key];
+    v->push_back(new config);
+    return *v->back();
 }
 
