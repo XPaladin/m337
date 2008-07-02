@@ -5,26 +5,26 @@
 #include <vector>
 #include <map>
 
-typedef std::map<std::string, std::string> string_map;
-
 using namespace std;
 
 class config
 {
     public:
-        typedef std::vector<config*> child_list;
-        typedef std::map<string, child_list*> child_map;
+        typedef map<string, string> string_map;
+        typedef vector<config*> child_list;
+        typedef map<string, child_list*> child_map;
 
     protected:
-        child_map* children_;
-        string_map* values_;
+        child_map children_;
+        map<int,int> values_;
 
     public:
         config();
         ~config();
 
-        child_list* operator[](const string&) const;
+        string operator[](const string&) const;
         void clear();
+        config& add_child(const string& key);
 };
 
 #endif
