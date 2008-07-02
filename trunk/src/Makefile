@@ -1,15 +1,21 @@
 CPPC=g++
 CFLAGS=-Wall -pedantic -g
 SDLFLAGS=`sdl-config --cflags`
-LIBS=`sdl-config --libs` -lSDL_image
+LIBS=`sdl-config --libs` -lSDL_image -lSDL_net
 BIN_DIR=../bin/
 EXE=$(BIN_DIR)m337
+SERV=$(BIN_DIR)server
 
-all: m337
+all: m337 server
 
-m337: m337.cpp m337_engine.o wengine.o unit.o gamemap.o
+server: m337_server.cpp tcputil.o
 	$(CPPC) $(LIBS) -o $(BIN_DIR)$@ $^
 
+m337: m337.cpp m337_engine.o wengine.o unit.o gamemap.o tcputil.o
+	$(CPPC) $(LIBS) -o $(BIN_DIR)$@ $^
+
+tcputil.o: tcputil.cpp
+	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
 m337_engine.o: m337_engine.cpp wengine.o
 	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
 
@@ -23,4 +29,4 @@ gamemap.o: wengine/gamemap.cpp
 	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
 
 clean:
-	rm -rf *.o wengine/*.o $(EXE)
+	rm -rf *.o wengine/*.o $(EXE) $(SERV)

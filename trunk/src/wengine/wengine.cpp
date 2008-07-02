@@ -15,7 +15,7 @@ wengine::wengine(int w, int h) :
 
 wengine::~wengine()
 {
-    delete(occupied_);
+ /*   delete(occupied_);
     delete(to_refresh_);
     delete(terrain_);
     for (unsigned int i=0; i<units_->size(); ++i) {
@@ -24,6 +24,7 @@ wengine::~wengine()
         delete(units_->at(i));
     }
     delete(units_);
+*/
 }
 
 void wengine::init(Uint32 init_flags, Uint32 mode_flags)
