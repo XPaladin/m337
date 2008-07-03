@@ -83,7 +83,6 @@ void m337_engine::main_loop()
 	SDL_Thread *net_thread=NULL;
 	
 	DATA *datos;
-        datos = new DATA;
 	datos->sock=sock;
 	datos->engine=this;
 	net_thread=SDL_CreateThread(net_thread_main,datos);
