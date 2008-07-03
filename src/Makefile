@@ -28,5 +28,8 @@ util.o: wengine/util.cpp
 config.o: wengine/config.cpp
 	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
 
+parser.o: wengine/parser.cpp
+	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
+
 clean:
 	rm -rf *.o wengine/*.o $(EXE)
