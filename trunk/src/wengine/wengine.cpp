@@ -43,7 +43,7 @@ void wengine::init(Uint32 init_flags, Uint32 mode_flags)
 	config* c = cl->front();
 
 	ifstream* map_file;
-	map_file = new ifstream((*c)["map_data"], ios_base::in);
+	map_file = new ifstream((*c)["map_data"].c_str(), ios_base::in);
 	
     if (!map_file->is_open()) {
         cout << "map not found" << endl;
