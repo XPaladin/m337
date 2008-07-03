@@ -33,6 +33,25 @@ void wengine::init(Uint32 init_flags, Uint32 mode_flags)
     main_screen_ = SDL_SetVideoMode(width_*TILE_W, height_*TILE_H,
             0, mode_flags);
     SDL_WM_SetCaption("m337", NULL);
+
+
+	child_list *cl = configuration_->get_children("scenario");
+	config* c = cl->first();
+
+	ifstream* map_file;
+	map_file = new ifstream((*c)["map_data"], ios_base::in);
+	
+    if (!map_file->is_open()) {
+        cout << "map not found" << endl;
+    	return;
+    }     
+	cout << init_map(map_file) << endl;
+
+	if(atoi( (*c)["player_number"].c_str() )==2){
+	    cout << add_unit("Char01", "../images/players/male01.png") << endl;
+    	cout << add_unit("Char02", "../images/players/female01.png") << endl;
+	}
+	
     main_loop();
 }
 
@@ -191,4 +210,12 @@ int wengine::init_map(ifstream *map_file)
         }
     }
     return 0;
+}
+
+int wengine::init_cfg(ifstream *cfg_file)
+{
+	parser par;
+	par.parse(*cfg_file, *configuration_);
+	return 1;
+
 }
