@@ -191,7 +191,9 @@ int main(int argc, char **argv)
 	}
 
 	// get the port from the commandline
-	port=(Uint16)strtol(argv[1],NULL,0);
+	if(argc>=2){
+		port=(Uint16)strtol(argv[1],NULL,0);
+	}
 
 	// Resolve the argument into an IPaddress type
 	if(SDLNet_ResolveHost(&ip,NULL,port)==-1)
