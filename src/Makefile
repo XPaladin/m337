@@ -11,7 +11,7 @@ all: m337 server
 server: m337_server.cpp tcputil.o
 	$(CPPC) $(LIBS) -o $(BIN_DIR)$@ $^
 
-m337: m337.cpp m337_engine.o wengine.o unit.o gamemap.o tcputil.o
+m337: m337.cpp m337_engine.o wengine.o unit.o gamemap.o tcputil.o parser.o config.o
 	$(CPPC) $(LIBS) -o $(BIN_DIR)$@ $^
 
 tcputil.o: tcputil.cpp
