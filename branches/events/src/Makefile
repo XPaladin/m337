@@ -2,6 +2,7 @@ CPPC=g++
 CFLAGS=-Wall -pedantic -g
 SDLFLAGS=`sdl-config --cflags`
 LIBS=`sdl-config --libs` -lSDL_image
+DEFS=
 BIN_DIR=../bin/
 EXE=$(BIN_DIR)m337
 
@@ -26,10 +27,10 @@ util.o: wengine/util.cpp
 	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
 
 config.o: wengine/config.cpp
-	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
+	$(CPPC) $(CFLAGS) $(SDLFLAGS) $(DEFS) -c $<
 
 parser.o: wengine/parser.cpp
-	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
+	$(CPPC) $(CFLAGS) $(SDLFLAGS) $(DEFS) -c $<
 
 clean:
 	rm -rf *.o wengine/*.o $(EXE)

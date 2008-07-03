@@ -1,5 +1,10 @@
 #include "config.h"
 
+#ifdef DEBUG
+#include <iostream>
+using namespace std;
+#endif
+
 config::config() :
     children_ (),
     values_ ()
@@ -47,7 +52,7 @@ config& config::add_child(const string& key)
     return *v->back();
 }
 
-int config::get_children(const string& key, child_list* cl)
+int config::get_children(const string& key, child_list*& cl)
 {
     if (children_.count(key) > 0) {
         cl = children_[key];
@@ -57,8 +62,6 @@ int config::get_children(const string& key, child_list* cl)
 }
 
 #ifdef DEBUG
-#include <iostream>
-using namespace std;
 void config::print_attrs()
 {
     for (string_map::iterator i = values_.begin();
@@ -70,11 +73,12 @@ void config::print_children()
 {
     for (child_map::iterator i = children_.begin();
             i != children_.end(); ++i) {
-        cout << i->first << endl;
         for (child_list::iterator j = i->second->begin();
                 j != i->second->end(); ++j) {
+            cout << i->first << endl;
             (*j)->print_attrs();
             (*j)->print_children();
+            cout << "/" << i->first << endl;
         }
     }
 }

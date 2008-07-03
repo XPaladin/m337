@@ -25,7 +25,7 @@ class config
         string& operator[](const string&);
         void clear();
         config& add_child(const string& key);
-        int get_children(const string&, child_list*);
+        int get_children(const string&, child_list*&);
 
 #ifdef DEBUG
         void print_attrs();
