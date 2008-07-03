@@ -12,14 +12,19 @@ int main(int argc, char* argv[])
 	const char *s_ip;
 	Uint16 port;
     path << "../data/maps/";
+	int pl;
 
     ifstream* map_file;
-    if (argc==4) {
+    if (argc==5) {
         path << argv[1];
 		s_ip=argv[2];
 		port=(Uint16)strtol(argv[3],NULL,0);
+		pl=atoi(argv[4]);
     } else {
-		printf("%s map server port\n",argv[0]);
+		if(argc=2){
+			pl=atoi(argv[1]);
+		}
+		printf("%s map server port player\n",argv[0]);
         path << "2p_Test";
 		s_ip="localhost";
 		port=4337;
@@ -35,8 +40,8 @@ int main(int argc, char* argv[])
     cout << eng->init_map(map_file) << endl;
     map_file->close();
     
-    cout << eng->add_unit("Char01", "../images/players/male01.png",false/*eng->me(0)*/) << endl;
-    cout << eng->add_unit("Char02", "../images/players/female01.png",true/*eng->me(1)*/) << endl;
+    cout << eng->add_unit("Char01", "../images/players/male01.png",pl==0/*eng->me(0)*/) << endl;
+    cout << eng->add_unit("Char02", "../images/players/female01.png",pl==1/*eng->me(1)*/) << endl;
 
     eng->init();
 
