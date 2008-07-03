@@ -1,5 +1,8 @@
 #include "wengine.h"
 
+/* easier access to child_lists */
+typedef config::child_list child_list;
+
 wengine::wengine(int w, int h) :
     width_ (w),
     height_ (h),
@@ -35,8 +38,9 @@ void wengine::init(Uint32 init_flags, Uint32 mode_flags)
     SDL_WM_SetCaption("m337", NULL);
 
 
-	child_list *cl = configuration_->get_children("scenario");
-	config* c = cl->first();
+	child_list *cl;
+        configuration_->get_children("scenario", cl);
+	config* c = cl->front();
 
 	ifstream* map_file;
 	map_file = new ifstream((*c)["map_data"], ios_base::in);
