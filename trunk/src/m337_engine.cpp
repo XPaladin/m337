@@ -6,7 +6,7 @@ m337_engine::~m337_engine()
 m337_engine::m337_engine(string s_ip,Uint16 p) :
     string_ip(s_ip),port(p)
 {
-	wengine::wengine();
+//	wengine::wengine();
 	done=0;
 
 
@@ -121,8 +121,7 @@ void m337_engine::main_loop()
 		    	            message[0]='3';
 		        	        break;
 						default:
-							
-                            break;
+							break;
                     }
 				message[1]='\0';
 				putMsg(sock,message);

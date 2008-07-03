@@ -25,6 +25,8 @@ class wengine {
     protected:
         int width_;
         int height_;
+		int paint_from_x_;
+		int paint_from_y_;
         SDL_Surface* main_screen_;
         unit_list* units_;
 //        surface_list* terrain_;
