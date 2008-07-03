@@ -4,7 +4,7 @@ m337_engine::~m337_engine()
 {
 }
 m337_engine::m337_engine(string s_ip,Uint16 p) :
-    string_ip(s_ip),port(p)
+    port(p),string_ip(s_ip)
 {
 //	wengine::wengine();
 	done=0;
@@ -74,6 +74,9 @@ typedef struct{
 
 int net_thread_main(void *data);
 
+bool m337_engine::me(int id){
+	return id==my_unit_id;
+}
 void m337_engine::main_loop()
 {
 
@@ -82,11 +85,13 @@ void m337_engine::main_loop()
     SDL_Event event;
 	SDL_Thread *net_thread=NULL;
 	
-	DATA *datos;
+	DATA *datos=new DATA;
         datos = new DATA;
 	datos->sock=sock;
 	datos->engine=this;
-	net_thread=SDL_CreateThread(net_thread_main,datos);
+	net_thread=SDL_CreateThread(
+		/*(int *(void*))*/net_thread_main,
+		/*port*/datos);
 	if(!net_thread)
 	{
 		printf("SDL_CreateThread: %s\n",SDL_GetError());
@@ -134,15 +139,17 @@ void m337_engine::main_loop()
 	done=1;
 //	SDL_KillThread(net_thread);
 	SDL_WaitThread(net_thread,NULL);
-
+	delete datos;
 	// this shows our unique reason where the threads ended
 	printf("Finished code %d\n",done);
 	
 }
-int net_thread_main(void *data)
+int /*m337_engine::*/net_thread_main(void *data)
 {
 	TCPsocket sock=((DATA *)data)->sock;
 	m337_engine *thees=((DATA *)data)->engine;
+//	TCPsocket sock=(TCPsocket)data;
+//	m337_engine *thees=this;
 	SDLNet_SocketSet set;
 	char *str=NULL;
 	char accion;
@@ -202,6 +209,10 @@ int net_thread_main(void *data)
 		        case '3':
 		            thees->move_unit(pl, thees->LEFT);
 		            break;
+				case 'y':
+					thees->my_unit_id=pl;
+					printf("you are:%d\n",pl);
+					break;
 				default:
 		           	break;
 			}

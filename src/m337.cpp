@@ -35,8 +35,8 @@ int main(int argc, char* argv[])
     cout << eng->init_map(map_file) << endl;
     map_file->close();
     
-    cout << eng->add_unit("Char01", "../images/players/male01.png") << endl;
-    cout << eng->add_unit("Char02", "../images/players/female01.png") << endl;
+    cout << eng->add_unit("Char01", "../images/players/male01.png",false/*eng->me(0)*/) << endl;
+    cout << eng->add_unit("Char02", "../images/players/female01.png",true/*eng->me(1)*/) << endl;
 
     eng->init();
 

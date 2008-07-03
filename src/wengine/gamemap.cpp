@@ -41,6 +41,7 @@ gamemap::gamemap(int w, int h, ifstream *archivo):
     string path;
     for (int i=0; i<h_; ++i) {
         getline(*archivo,linea);
+		printf("%s\n",linea.c_str());
         for(int j=0;j<w_; ++j){
             charmap_[i*w_+j]=linea[j];
             

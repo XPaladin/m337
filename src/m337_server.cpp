@@ -17,7 +17,7 @@ int num_clients=0;
 TCPsocket server;
 
 void send_all(char *buf);
-
+char *mformat(char *format,...);
 // add a client from our array of clients
 Client *add_client(TCPsocket sock)
 {
@@ -28,6 +28,8 @@ Client *add_client(TCPsocket sock)
 	printf("-->jugador %d\n",num_clients-1);
 	// inform all clients, including the new one, of the joined user
 //	send_all(mformat("ss","--> ",name));
+	//le digo quien es el
+	putMsg(clients[num_clients-1].sock,mformat("d s",num_clients-1," y"));
 	return(&clients[num_clients-1]);
 }
 // remove a client from our array of clients
