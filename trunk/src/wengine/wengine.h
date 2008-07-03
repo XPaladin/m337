@@ -35,6 +35,7 @@ class wengine {
         mutable num_list* to_refresh_;
         num_list* occupied_;
 		gamemap *terrain_;
+		config *configuration_;
     public:
         wengine(int w=20, int h=10);
         virtual ~wengine();
@@ -48,6 +49,7 @@ class wengine {
                 const char* unit_path_to_sprite);
         int move_unit(int unit_id, direction dir);
 		int init_map(ifstream *archivo);
+		int init_cfg(ifstream *archivo);
     protected:
         virtual void main_loop();
         void repaint() const;
