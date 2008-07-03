@@ -8,6 +8,8 @@
 
 #include "unit.h"
 #include "gamemap.h"
+#include "config.h"
+#include "parser.h"
 
 #define TILE_W 30
 #define TILE_H 40
