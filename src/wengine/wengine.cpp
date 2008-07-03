@@ -1,5 +1,7 @@
 #include "wengine.h"
-
+#include <iostream>
+#include <fstream>
+#include <sstream>
 /* easier access to child_lists */
 typedef config::child_list child_list;
 
@@ -29,7 +31,7 @@ wengine::~wengine()
     delete(units_);
 
 }
-
+typedef vector<config*> child_list;
 void wengine::init(Uint32 init_flags, Uint32 mode_flags)
 {
     SDL_Init(init_flags);
@@ -38,9 +40,11 @@ void wengine::init(Uint32 init_flags, Uint32 mode_flags)
     SDL_WM_SetCaption("m337", NULL);
 
 
+
 	child_list *cl;
         configuration_->get_children("scenario", cl);
 	config* c = cl->front();
+
 
 	ifstream* map_file;
 	map_file = new ifstream((*c)["map_data"].c_str(), ios_base::in);
@@ -51,9 +55,17 @@ void wengine::init(Uint32 init_flags, Uint32 mode_flags)
     }     
 	cout << init_map(map_file) << endl;
 
-	if(atoi( (*c)["player_number"].c_str() )==2){
-	    cout << add_unit("Char01", "../images/players/male01.png") << endl;
-    	cout << add_unit("Char02", "../images/players/female01.png") << endl;
+	for(int i=0;i<atoi( (*c)["player_number"].c_str() );i++){
+		c->get_children("player_start", cl);
+		c = cl->back();
+		cl->pop_back();
+		int x= atoi( (*c)["x"].c_str() );
+		int y= atoi( (*c)["y"].c_str() );
+		if(i==0){
+		    cout << add_unit("Char01", "../images/players/male01.png",x,y) << endl;
+		}else{
+	    	cout << add_unit("Char02", "../images/players/female01.png",x,y) << endl;
+		}
 	}
 	
     main_loop();
@@ -68,7 +80,7 @@ void wengine::main_loop()
 {
 }
 
-int wengine::add_unit(const char* name, const char* path_to_sprite)
+int wengine::add_unit(const char* name, const char* path_to_sprite, int x, int y)
 {
     unit* new_unit = new unit(name, path_to_sprite);
     SDL_Surface* img = IMG_Load(new_unit->get_path_to_sprite().c_str());
@@ -79,8 +91,8 @@ int wengine::add_unit(const char* name, const char* path_to_sprite)
     } else {
         int id = new_unit->get_id();
         units_->push_back(new unit_pair(new_unit, img));
-        new_unit->x = id % width_;
-        new_unit->y = (id / width_) * height_+1;
+        new_unit->x = x;
+        new_unit->y = y;
         occupied_->push_back(get_tile_index(new_unit->x,new_unit->y));
         return id;
     }
