@@ -21,10 +21,10 @@ class m337_engine: public wengine
 {
     protected:
         static const int game_tic = 10;
+		string string_ip;
 		IPaddress ip;
 		TCPsocket sock;
 		Uint16 port;
-		string string_ip;
 		SDLNet_SocketSet set;
 		fd_set fdset;
 
