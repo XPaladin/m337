@@ -16,13 +16,13 @@ class config
 
     protected:
         child_map children_;
-        map<int,int> values_;
+	string_map values_;
 
     public:
         config();
         ~config();
 
-        string operator[](const string&) const;
+        string operator[](const string&);
         void clear();
         config& add_child(const string& key);
 };

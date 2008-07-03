@@ -31,10 +31,9 @@ void config::clear()
     children_.clear();
 }
 
-string config::operator[](const string& str) const
+string config::operator[](const string& str)
 {
-    values_[0] = 4;
-    return str;
+    return values_[str];
 }
 
 config& config::add_child(const string& key)
