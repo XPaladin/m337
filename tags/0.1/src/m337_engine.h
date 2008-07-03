@@ -28,11 +28,15 @@ class m337_engine: public wengine
 		SDLNet_SocketSet set;
 		fd_set fdset;
 
+
     public:
+		int my_unit_id;
         ~m337_engine();
 		int done;
 		void init();
+		bool me(int id);
 		m337_engine(string s_ip,Uint16 port);
+//		int net_thread_main(void *data);
 
     protected:
         void main_loop();

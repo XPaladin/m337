@@ -29,6 +29,7 @@ class wengine {
 		int paint_from_y_;
         SDL_Surface* main_screen_;
         unit_list* units_;
+		unit *my_unit;
 //        surface_list* terrain_;
         mutable num_list* to_refresh_;
         num_list* occupied_;
@@ -43,7 +44,8 @@ class wengine {
         void quit();
         int add_unit(
                 const char* unit_name,
-                const char* unit_path_to_sprite);
+                const char* unit_path_to_sprite,
+				bool me=false);
         int move_unit(int unit_id, direction dir);
 		int init_map(ifstream *archivo);
     protected:
@@ -53,6 +55,7 @@ class wengine {
         bool is_occupied(int) const;
         void unoccupy(int);
         int get_tile_index(int, int);
+		void calc_from();
 };
 #endif
 

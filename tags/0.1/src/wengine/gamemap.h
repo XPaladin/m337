@@ -17,10 +17,10 @@ class gamemap
         ~gamemap();
         string get_path_to_sprite(int n);		
         bool es_muro(int n);
+		int h_, w_;
 
     protected:
         int get_tile_path_to_sprite(char symbol, string& path);
-        int h_, w_;
         char *charmap_;
 };
 
