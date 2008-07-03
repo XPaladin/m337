@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 
     eng->quit();
 
-    delete(map_file);
+    delete(cfg_file);
     delete(eng);
 
     return 0;

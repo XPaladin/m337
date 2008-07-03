@@ -16,10 +16,17 @@ m337: m337.cpp m337_engine.o wengine.o unit.o gamemap.o tcputil.o
 
 tcputil.o: tcputil.cpp
 	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
+
 m337_engine.o: m337_engine.cpp wengine.o
 	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
 
-wengine.o: wengine/wengine.cpp unit.o gamemap.o
+parser.o: wengine/parser.cpp config.o
+	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
+
+config.o: wengine/config.cpp
+	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
+
+wengine.o: wengine/wengine.cpp unit.o gamemap.o parser.o config.o
 	$(CPPC) $(CFLAGS) $(SDLFLAGS) -c $<
 
 unit.o: wengine/unit.cpp

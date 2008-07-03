@@ -46,7 +46,8 @@ class wengine {
         void quit();
         int add_unit(
                 const char* unit_name,
-                const char* unit_path_to_sprite);
+                const char* unit_path_to_sprite,
+				int x, int y);
         int move_unit(int unit_id, direction dir);
 		int init_map(ifstream *archivo);
 		int init_cfg(ifstream *archivo);
